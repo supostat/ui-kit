@@ -1,0 +1,21 @@
+version: "3.9"
+
+volumes:
+  bundler_gems:
+  db_data:
+
+services:
+  app:
+    build: .
+    command: ./scripts/server.sh
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+      - bundler_gems:/usr/local/bundle/
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
